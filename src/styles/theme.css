@@ -1,0 +1,435 @@
+/* Essentials theme and layout.
+   Ported faithfully from the prototype: warm paper, Spectral serif, muted sage,
+   and — above all — lots of whitespace. The calm is the product. Spectral for
+   the essentials, date, and intention; Hanken Grotesk only for tiny uppercase
+   labels. */
+@import 'tailwindcss';
+
+/* Expose the core tokens to Tailwind utilities too (v4 @theme). */
+@theme {
+  --color-bg: #faf8f4;
+  --color-surface: #fffefb;
+  --color-accent: #6f8a72;
+  --font-serif: 'Spectral', Georgia, serif;
+  --font-ui: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+:root {
+  --accent: #6f8a72;
+  --on-accent: #ffffff;
+  --serif: 'Spectral', Georgia, serif;
+  --ui: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+/* Warm paper (default) — a quiet notebook, lots of air. */
+[data-theme='paper'] {
+  --bg: #faf8f4;
+  --surface: #fffefb;
+  --surface-2: #f1ede5;
+  --line: rgba(43, 41, 38, 0.1);
+  --ink: #2b2926;
+  --dim: #8a8378;
+  --faint: #bdb6aa;
+  --accent-soft: color-mix(in oklab, var(--accent) 14%, transparent);
+  color-scheme: light;
+}
+
+/* Soft dark — warm, dim, restful. Never harsh or pure black. */
+[data-theme='dark'] {
+  --bg: #17171b;
+  --surface: #1e1e23;
+  --surface-2: #26262c;
+  --line: rgba(255, 255, 255, 0.08);
+  --ink: #ecebe6;
+  --dim: #98968d;
+  --faint: #5f5d57;
+  --on-accent: #16161a;
+  --accent-soft: color-mix(in oklab, var(--accent) 20%, transparent);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition:
+    background 0.5s ease,
+    color 0.5s ease;
+}
+::selection {
+  background: var(--accent-soft);
+}
+button {
+  font-family: inherit;
+}
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.e-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The two nearly-invisible top-corner controls. */
+.e-corner {
+  position: fixed;
+  top: 22px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--faint);
+  display: grid;
+  place-items: center;
+  transition: color 0.2s ease;
+}
+.e-corner:hover {
+  color: var(--dim);
+}
+.e-corner-theme {
+  inset-inline-end: 22px;
+}
+.e-corner-settings {
+  inset-inline-start: 22px;
+}
+
+/* The single calm column. */
+.e-col {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(56px, 12vh, 130px) clamp(26px, 7vw, 56px) 60px;
+}
+
+/* Header */
+.e-head {
+  margin-bottom: clamp(40px, 8vh, 72px);
+}
+.e-tabs {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.e-tab {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--faint);
+  transition: color 0.25s ease;
+}
+.e-tab.is-on {
+  color: var(--accent);
+}
+.e-tab:hover {
+  color: var(--dim);
+}
+.e-tab.is-on:hover {
+  color: var(--accent);
+}
+.e-tab-sep {
+  color: var(--faint);
+  opacity: 0.5;
+}
+
+.e-date {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(34px, 7vw, 46px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.e-date-sub {
+  font-size: clamp(15px, 3vw, 17px);
+  color: var(--dim);
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.e-intention {
+  margin-top: 22px;
+}
+.e-intention-input {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0 0 4px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--ink);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease;
+}
+.e-intention-input::placeholder {
+  color: var(--faint);
+}
+.e-intention-input:focus {
+  border-bottom-color: var(--line);
+}
+.e-intention-add {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--ui);
+  font-size: 14px;
+  color: var(--faint);
+  transition: color 0.2s ease;
+}
+.e-intention-add:hover {
+  color: var(--dim);
+}
+
+/* The list */
+.e-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.e-empty {
+  padding: 14px 0;
+}
+.e-empty-q {
+  font-family: var(--serif);
+  font-size: clamp(22px, 5vw, 28px);
+  color: var(--ink);
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+.e-empty-sub {
+  font-size: 15.5px;
+  color: var(--dim);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.e-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.e-item:last-of-type {
+  border-bottom: 1px solid transparent;
+}
+.e-checkbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.e-check {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--on-accent);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.15s ease;
+}
+.e-checkbtn:active .e-check {
+  transform: scale(0.9);
+}
+.e-check-ghost {
+  border-style: dashed;
+  opacity: 0.6;
+}
+.e-item.is-done .e-check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.e-text {
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: start;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 1.4;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.e-item.is-main .e-text {
+  font-size: 26px;
+  font-weight: 500;
+}
+.e-item.is-main .e-check {
+  width: 30px;
+  height: 30px;
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+}
+.e-item.is-done .e-text {
+  color: var(--faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--faint);
+}
+.e-carried {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+}
+
+.e-remove {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-top: 5px;
+  color: var(--faint);
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+.e-item:hover .e-remove,
+.e-remove:focus-visible {
+  opacity: 0.6;
+}
+.e-remove:hover {
+  opacity: 1;
+  color: var(--dim);
+}
+
+.e-input {
+  outline: none;
+}
+.e-input::placeholder {
+  color: var(--faint);
+}
+.e-adding .e-text {
+  cursor: text;
+}
+
+.e-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px 0;
+  margin-top: 2px;
+  font-family: var(--ui);
+  font-size: 15.5px;
+  color: var(--faint);
+  transition: color 0.25s ease;
+}
+.e-add:hover {
+  color: var(--accent);
+}
+.e-add-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--line);
+  display: grid;
+  place-items: center;
+  transition: border-color 0.25s ease;
+}
+.e-add:hover .e-add-icon {
+  border-color: var(--accent);
+}
+
+/* Footer states */
+.e-foot {
+  margin-top: 44px;
+  min-height: 24px;
+}
+.e-done-note {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--dim);
+}
+.e-full-note {
+  font-family: var(--ui);
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+
+@keyframes efade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.e-fade {
+  animation: efade 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
