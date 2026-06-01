@@ -1,0 +1,10 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Essentials">
+  <rect width="512" height="512" fill="#faf8f4" />
+  <circle cx="150" cy="180" r="30" fill="none" stroke="#6f8a72" stroke-width="13" />
+  <path d="M135 180l11 11 20-22" fill="none" stroke="#6f8a72" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+  <rect x="210" y="170" width="150" height="15" rx="7.5" fill="#2b2926" />
+  <circle cx="150" cy="270" r="30" fill="none" stroke="#bdb6aa" stroke-width="13" />
+  <rect x="210" y="260" width="110" height="15" rx="7.5" fill="#bdb6aa" />
+  <circle cx="150" cy="360" r="30" fill="none" stroke="#bdb6aa" stroke-width="13" />
+  <rect x="210" y="350" width="130" height="15" rx="7.5" fill="#bdb6aa" />
+</svg>
